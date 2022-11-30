@@ -1,3 +1,10 @@
+#==============================================
+#
+#  Nathaniel Hawes, nh979416@ohio.edu
+#
+#==============================================
+
+
 import pandas as pd
 import numpy as np
 import pyproj
@@ -106,8 +113,6 @@ if __name__ == "__main__":
 
 
     ax1.axis('equal')
-    # plt.xlabel('Relative Distance from Starting Point East/West (m)')
-    # plt.ylabel('Relative Distance from Starting Point North/South (m)')
     plt.xlabel('x (m)')
     plt.ylabel('y (m)')
     plt.grid(True)
