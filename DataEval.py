@@ -94,8 +94,9 @@ if __name__ == "__main__":
     fig,ax1  = plt.subplots()
 
     Intruder = PosData(dir + IntDir + "vehicle_local_position_0.csv", 4, 5, 6)
-    Mission  = PosData(dir + MissDir + "vehicle_local_position_0.csv", 4, 5, 6)
     IntWay   = WayPtsData(dir + IntDir + "position_setpoint_triplet_0.csv", 42,43,44,82, Intruder)
+
+    Mission  = PosData(dir + MissDir + "vehicle_local_position_0.csv", 4, 5, 6)
     MissWay  = WayPtsData(dir + MissDir + "position_setpoint_triplet_0.csv", 42,43,44,82, Mission)
 
     if (PosPlts):
