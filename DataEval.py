@@ -100,15 +100,20 @@ if __name__ == "__main__":
     MissWay  = WayPtsData(dir + MissDir + "position_setpoint_triplet_0.csv", 42,43,44,82, Mission)
 
     if (PosPlts):
-        ax1.plot(Intruder.y[Iadj1:len(Intruder.y)-Iadj2],Intruder.x[Iadj1:len(Intruder.x)-Iadj2], 'r', linewidth= lw, label="Intruder Path")
+        # ax1.plot(Intruder.y[Iadj1:len(Intruder.y)-Iadj2],Intruder.x[Iadj1:len(Intruder.x)-Iadj2], 'r', linewidth= lw, label="Intruder Path")
         ax1.plot(Mission.y[Madj1:len(Mission.y)-Madj2],Mission.x[Madj1:len(Mission.x)-Madj2], 'b', linewidth= lw, label="Mission Path")
 
     if (HeadPlts):
         IntHead = PosData(dir + IntDir + "vehicle_local_position_0.csv",4,6,20)
 
     if(Waypts):
-        ax1.plot(IntWay.xpts,IntWay.ypts,"r*", label="Intruder Waypoints (PosSet)", markersize = 10)
-        ax1.plot(MissWay.xpts,MissWay.ypts,"b*", label="Mission Waypoints (PosSet)", markersize = 10)
+        MwayAdj1 = 3
+        MwayAdj2 = 1
+
+        # ax1.plot(IntWay.xpts,IntWay.ypts,"r*", label="Intruder Waypoints", markersize = 10)
+        ax1.plot(MissWay.xpts[0:MwayAdj1],MissWay.ypts[0:MwayAdj1],"b*", label="Original Mission Waypoints", markersize = 10)
+        ax1.scatter(MissWay.xpts[MwayAdj1:len(MissWay.xpts)-MwayAdj2],MissWay.ypts[MwayAdj1:len(MissWay.xpts)-MwayAdj2],c="yellow", label="PRACAS Waypoints", s = 100,edgecolor='k',marker = '*')
+        ax1.plot(MissWay.xpts[len(MissWay.xpts)-MwayAdj2:len(MissWay.xpts)],MissWay.ypts[len(MissWay.xpts)-MwayAdj2:len(MissWay.xpts)],"b*", markersize = 10)
 
 
 
