@@ -86,9 +86,10 @@ if __name__ == "__main__":
     Iadj1    = 2500
     Iadj2    = 500
 
-    PosPlts  = True
-    HeadPlts = False
-    Waypts   = True
+    PosPlts  = not True
+    HeadPlts = not True
+    Waypts   = not True
+    StartPlt =  True
     TestPlot = not True
     lw       = 2
 
@@ -120,14 +121,43 @@ if __name__ == "__main__":
         ax1.plot(MissWay.xpts[0:MwayAdj1],MissWay.ypts[0:MwayAdj1],"b*", label="Original Mission Waypoints", markersize = 10, zorder = 3)
         ax1.scatter(MissWay.xpts[MwayAdj1:len(MissWay.xpts)-MwayAdj2],MissWay.ypts[MwayAdj1:len(MissWay.xpts)-MwayAdj2],c="yellow", label="PRACAS Waypoints", s = 100,edgecolor='k',marker = '*', zorder = 4)
         ax1.plot(MissWay.xpts[len(MissWay.xpts)-MwayAdj2:len(MissWay.xpts)],MissWay.ypts[len(MissWay.xpts)-MwayAdj2:len(MissWay.xpts)],"b*", markersize = 10, zorder = 3)
+    
+    if(StartPlt):
+        ax1.plot(MissWay.xpts[len(MissWay.xpts)-1],MissWay.ypts[len(MissWay.ypts)-1], 'bx',markersize=10)
+        ax1.plot(MissWay.xpts[0],MissWay.ypts[0], 'bx',markersize=10)
+        ax1.add_artist(plt.Circle((MissWay.xpts[0],MissWay.ypts[0]),110,edgecolor='b',facecolor='none',linestyle='dashed', label='Loiter Circle'))
+        ax1.add_artist(plt.Circle((MissWay.xpts[len(MissWay.xpts)-1],MissWay.ypts[len(MissWay.ypts)-1]),110,edgecolor='b',facecolor='none',linestyle='dashed'))
+
+        TPathx = MissWay.xpts[0:3]
+        TPathx = np.append(TPathx, MissWay.xpts[len(MissWay.xpts)-1])
+        TPathx[len(TPathx)-1] += 110
+
+        TPathy = MissWay.ypts[0:3]
+        TPathy = np.append(TPathy, MissWay.ypts[len(MissWay.ypts)-1])
+        TPathy[0] -= 110
+        
+        ax1.scatter(TPathx[0],TPathy[0], c='g', marker=(3,0,45), s=150, label="Mission Start", edgecolor='k', zorder=5)
+        ax1.plot(TPathx,TPathy,'b',linewidth=lw, label='Mission Transition Path')
+
+        ax1.scatter(Intruder.y[Iadj1],Intruder.x[Iadj1], c='k', marker=(3,0,-90), s=150, label="Intruder Start",zorder=5)
+        
+        IPathx = Intruder.y[Iadj1]
+        IPathx = np.append(IPathx, Intruder.y[len(Intruder.y)-Iadj2])
+
+        IPathy = Intruder.x[Iadj1]
+        IPathy = np.append(IPathy, Intruder.x[len(Intruder.y)-Iadj2])
+        ax1.plot(IPathx,IPathy,'r',linewidth=lw, label='Intruder Interferance Path')
+
 
     if(TestPlot):
-        plt.scatter(0,0,marker=(3,0,-90),s=2000, c = 'yellow', edgecolor = 'k')
-
+        # plt.scatter(0,0,marker=(3,0,-90),s=2000, c = 'yellow', edgecolor = 'k')
+        ax1.add_artist(plt.Circle((0,0),5,edgecolor='k',facecolor='none',linestyle='dashed'))
 
     ax1.axis('equal')
+    plt.xlim([-480,480])
     plt.xlabel('x (m)')
     plt.ylabel('y (m)')
     plt.grid(True)
-    plt.legend(loc = 'lower left')
+    plt.legend(loc = 'lower left', framealpha = 1)
+    # plt.legend(loc = 'lower left', frameon=True,edgecolor='k',framealpha=1)
     plt.show()
