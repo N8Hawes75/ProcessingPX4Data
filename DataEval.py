@@ -89,6 +89,7 @@ if __name__ == "__main__":
     PosPlts  = True
     HeadPlts = False
     Waypts   = True
+    TestPlot = not True
     lw       = 2
 
     fig,ax1  = plt.subplots()
@@ -100,8 +101,13 @@ if __name__ == "__main__":
     MissWay  = WayPtsData(dir + MissDir + "position_setpoint_triplet_0.csv", 42,43,44,82, Mission)
 
     if (PosPlts):
-        # ax1.plot(Intruder.y[Iadj1:len(Intruder.y)-Iadj2],Intruder.x[Iadj1:len(Intruder.x)-Iadj2], 'r', linewidth= lw, label="Intruder Path")
-        ax1.plot(Mission.y[Madj1:len(Mission.y)-Madj2],Mission.x[Madj1:len(Mission.x)-Madj2], 'b', linewidth= lw, label="Mission Path")
+        ax1.plot(Intruder.y[Iadj1:len(Intruder.y)-Iadj2],Intruder.x[Iadj1:len(Intruder.x)-Iadj2], 'orange', linewidth= lw, label="Intruder Path", zorder = 2)
+        ax1.scatter(Intruder.y[Iadj1],Intruder.x[Iadj1], c='k', marker=(3,0,-90), s=150, label="Intruder Start", edgecolor = 'g', zorder = 10)
+        ax1.scatter(Intruder.y[len(Intruder.y)-Iadj2],Intruder.x[len(Intruder.y)-Iadj2], c='k', marker=(3,0,-90), s=150, label="Intruder End", edgecolor = 'r', zorder = 10)
+
+        ax1.plot(Mission.y[Madj1:len(Mission.y)-Madj2],Mission.x[Madj1:len(Mission.x)-Madj2], 'b', linewidth= lw, label="Mission Path", zorder = 2)
+        ax1.scatter(Mission.y[Madj1],Mission.x[Madj1], c='g', marker=(3,0,-45), s=150, label="Mission Start", edgecolor = 'k', zorder = 10)
+        ax1.scatter(Mission.y[len(Mission.y)-Madj2],Mission.x[len(Mission.x)-Madj2], c='r', marker=(3,0,-35), s=150, label="Mission End", edgecolor = 'k', zorder = 10)
 
     if (HeadPlts):
         IntHead = PosData(dir + IntDir + "vehicle_local_position_0.csv",4,6,20)
@@ -111,16 +117,17 @@ if __name__ == "__main__":
         MwayAdj2 = 1
 
         # ax1.plot(IntWay.xpts,IntWay.ypts,"r*", label="Intruder Waypoints", markersize = 10)
-        ax1.plot(MissWay.xpts[0:MwayAdj1],MissWay.ypts[0:MwayAdj1],"b*", label="Original Mission Waypoints", markersize = 10)
-        ax1.scatter(MissWay.xpts[MwayAdj1:len(MissWay.xpts)-MwayAdj2],MissWay.ypts[MwayAdj1:len(MissWay.xpts)-MwayAdj2],c="yellow", label="PRACAS Waypoints", s = 100,edgecolor='k',marker = '*')
-        ax1.plot(MissWay.xpts[len(MissWay.xpts)-MwayAdj2:len(MissWay.xpts)],MissWay.ypts[len(MissWay.xpts)-MwayAdj2:len(MissWay.xpts)],"b*", markersize = 10)
+        ax1.plot(MissWay.xpts[0:MwayAdj1],MissWay.ypts[0:MwayAdj1],"b*", label="Original Mission Waypoints", markersize = 10, zorder = 3)
+        ax1.scatter(MissWay.xpts[MwayAdj1:len(MissWay.xpts)-MwayAdj2],MissWay.ypts[MwayAdj1:len(MissWay.xpts)-MwayAdj2],c="yellow", label="PRACAS Waypoints", s = 100,edgecolor='k',marker = '*', zorder = 4)
+        ax1.plot(MissWay.xpts[len(MissWay.xpts)-MwayAdj2:len(MissWay.xpts)],MissWay.ypts[len(MissWay.xpts)-MwayAdj2:len(MissWay.xpts)],"b*", markersize = 10, zorder = 3)
 
-
+    if(TestPlot):
+        plt.scatter(0,0,marker=(3,0,-90),s=2000, c = 'yellow', edgecolor = 'k')
 
 
     ax1.axis('equal')
     plt.xlabel('x (m)')
     plt.ylabel('y (m)')
     plt.grid(True)
-    plt.legend()
+    plt.legend(loc = 'lower left')
     plt.show()
